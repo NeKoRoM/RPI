@@ -39,7 +39,13 @@ print('Time: {}ms'.format(device_time))
 
 # Reset name
 bot.set_device_name(device_name)
-
+def reset_error():
+    device_alarm = bot.get_alarms_state()
+    print(device_alarm)
+    bot.clear_alarms_state()
+    device_alarm = bot.get_alarms_state()
+    print(device_alarm)
+#reset_error()
 reset_error()
 
 print(bot.get_pose())
@@ -51,10 +57,4 @@ sleep(1)
 #bot.set_point_to_point_command(3, 30, 30, 30, 30)
 #sleep(1)
 
-def reset_error():
-    device_alarm = bot.get_alarms_state()
-    print(device_alarm)
-    bot.clear_alarms_state()
-    device_alarm = bot.get_alarms_state()
-    print(device_alarm)
-#reset_error()
+
