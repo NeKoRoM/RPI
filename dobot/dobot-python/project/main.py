@@ -40,7 +40,7 @@ print('Time: {}ms'.format(device_time))
 # Reset name
 bot.set_device_name(device_name)
 
-
+reset_error()
 
 print(bot.get_pose())
 # One axis at a time
