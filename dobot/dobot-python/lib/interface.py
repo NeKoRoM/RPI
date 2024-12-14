@@ -75,13 +75,12 @@ class Interface:
 
     def get_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, False, False, [], direction='out')
-        print("get alarm s"+request)
+        print("get alarm s"+str(request))
         return self.send(request)
 
     def clear_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, True, False, [], direction='out')
-        print("set alarm s"+request)
-
+        print("set alarm s"+str(request))
         return self.send(request)
 
     def get_homing_paramaters(self):
