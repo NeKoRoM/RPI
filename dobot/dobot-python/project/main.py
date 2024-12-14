@@ -1,9 +1,11 @@
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
 import os
 from lib.interface import Interface
 from time import sleep
 from serial.tools import list_ports
+# import lib directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
+
 
 # Підключення до Dobot
 port = list_ports.comports()[0].device
