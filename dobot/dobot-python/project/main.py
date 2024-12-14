@@ -2,7 +2,7 @@ import sys
 import os
 # import lib directory
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
-from lib.interface import Interface
+from ..lib.interface import Interface
 from time import sleep
 from serial.tools import list_ports
 
