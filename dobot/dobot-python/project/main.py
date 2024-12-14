@@ -42,7 +42,7 @@ bot.set_device_name(device_name)
 
 
 
-
+bot.get_pose()
 # One axis at a time
 bot.set_point_to_point_command(3, 10, 10, 10, 10)
 sleep(1)
