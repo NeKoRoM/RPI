@@ -75,12 +75,10 @@ class Interface:
 
     def get_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, False, False, [], direction='out')
-        try:
-            # Отримуємо безпосередньо параметри
-            params = self.send(request)
             
-            # Конвертуємо перші 2 байти params в число
-            alarm_state = int.from_bytes(params[:2], byteorder='little')
+        try:
+            # Отримуємо стан безпосередньо
+            alarm_state = self.send(request)
             
             print(f"Alarm State: {alarm_state}")
             return alarm_state
