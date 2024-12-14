@@ -36,5 +36,11 @@ print('Version: {}.{}.{}'.format(device_version_major, device_version_minor, dev
 device_time = bot.get_device_time()
 print('Time: {}ms'.format(device_time))
 
+
+device_alarm = bot.get_alarms_state()
+print(device_alarm)
+bot.clear_alarms_state()
+device_alarm = bot.get_alarms_state()
+print(device_alarm)
 # Reset name
 bot.set_device_name(device_name)
