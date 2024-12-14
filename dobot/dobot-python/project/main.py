@@ -37,7 +37,6 @@ device_time = bot.get_device_time()
 print('Time: {}ms'.format(device_time))
 
 
-reset_error()
 # Reset name
 bot.set_device_name(device_name)
 
@@ -58,3 +57,4 @@ def reset_error():
     bot.clear_alarms_state()
     device_alarm = bot.get_alarms_state()
     print(device_alarm)
+reset_error()
