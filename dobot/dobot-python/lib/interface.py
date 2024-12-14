@@ -75,29 +75,19 @@ class Interface:
 
     def get_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, False, False, [], direction='out')
-            # Додаємо налагоджувальний вивід
-        print("Sending alarms state request:")
-        print("Request details:", request)
-        
         try:
-                response = self.send(request)
-                
-                # Друк деталей відповіді для діагностики
-                print("Response type:", type(response))
-                print("Response details:", response)
-                
-                if isinstance(response, Message):
-                    # Розпаковуємо стан тривог з raw_params
-                    alarm_state = int.from_bytes(response.raw_params[9:11], byteorder='little')
-                    print(f"Alarm State: {alarm_state}")
-                    return alarm_state
-                else:
-                    print("Unexpected response type")
-                    return None
+            # Отримуємо безпосередньо параметри
+            params = self.send(request)
             
+            # Конвертуємо перші 2 байти params в число
+            alarm_state = int.from_bytes(params[:2], byteorder='little')
+            
+            print(f"Alarm State: {alarm_state}")
+            return alarm_state
+        
         except Exception as e:
-                print(f"Error getting alarms state: {e}")
-                return None
+            print(f"Error getting alarms state: {e}")
+            return None
 
     def clear_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, True, False, [], direction='out')
