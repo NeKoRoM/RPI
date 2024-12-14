@@ -75,7 +75,22 @@ class Interface:
 
     def get_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, False, False, [], direction='out')
-        return self.send(request)
+            # Додаємо налагоджувальний вивід
+        print("Sending alarms state request:")
+        print("Request details:", request)
+        
+        try:
+            response = self.send(request)
+            
+            # Додаємо додаткову перевірку
+            print("Response raw data:", response.raw_params)
+            print("Response raw data length:", len(response.raw_params))
+            
+            return response
+        except Exception as e:
+            print(f"Error getting alarms state: {e}")
+            return None
+        
 
     def clear_alarms_state(self):
         request = Message([0xAA, 0xAA], 2, 20, True, False, [], direction='out')
