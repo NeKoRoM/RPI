@@ -1,94 +1,34 @@
-from time import sleep
-
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../lib')))
+import os
 from lib.interface import Interface
+from time import sleep
+from serial.tools import list_ports
 
+# Підключення до Dobot
+port = list_ports.comports()[0].device
+bot = Interface(port)
 
-class Dobot:
-    def __init__(self, port):
-        self.interface = Interface(port)
+print('Bot status:', 'connected' if bot.connected() else 'not connected')
 
-        self.interface.stop_queue(True)
-        self.interface.clear_queue()
-        self.interface.start_queue()
+device_name = bot.get_device_name()
+print('Name:', device_name)
 
-        self.interface.set_point_to_point_jump_params(10, 10)
-        self.interface.set_point_to_point_joint_params([50, 50, 50, 50], [50, 50, 50, 50])
-        self.interface.set_point_to_point_coordinate_params(50, 50, 50, 50)
-        self.interface.set_point_to_point_common_params(50, 50)
-        self.interface.set_point_to_point_jump2_params(5, 5, 5)
+bot.set_device_name('dobot-python')
+device_name = bot.get_device_name()
+print('New name:', device_name)
 
-        self.interface.set_jog_joint_params([50, 50, 50, 50], [50, 50, 50, 50])
-        self.interface.set_jog_coordinate_params([50, 50, 50, 50], [50, 50, 50, 50])
-        self.interface.set_jog_common_params(50, 50)
+device_id = bot.get_device_id()
+print('ID:', device_id)
 
-        self.interface.set_continous_trajectory_params(50, 50, 50)
+device_serial_number = bot.get_device_serial_number()
+print('Serial number:', device_serial_number)
 
-    def connected(self):
-        return self.interface.connected()
+[device_version_major, device_version_minor, device_version_revision] = bot.get_device_version()
+print('Version: {}.{}.{}'.format(device_version_major, device_version_minor, device_version_revision))
 
-    def get_pose(self):
-        return self.interface.get_pose()
+device_time = bot.get_device_time()
+print('Time: {}ms'.format(device_time))
 
-    def home(self, wait=True):
-        self.interface.set_homing_command(0)
-        if wait:
-            self.wait()
-
-    # Move to the absolute coordinate, one axis at a time
-    def move_to(self, x, y, z, r, wait=True):
-        self.interface.set_point_to_point_command(3, x, y, z, r)
-        if wait:
-            self.wait()
-
-    # Slide to the absolute coordinate, shortest possible path
-    def slide_to(self, x, y, z, r, wait=True):
-        self.interface.set_point_to_point_command(4, x, y, z, r)
-        if wait:
-            self.wait()
-
-    # Move to the absolute coordinate, one axis at a time
-    def move_to_relative(self, x, y, z, r, wait=True):
-        self.interface.set_point_to_point_command(7, x, y, z, r)
-        if wait:
-            self.wait()
-
-    # Slide to the relative coordinate, one axis at a time
-    def slide_to_relative(self, x, y, z, r, wait=True):
-        self.interface.set_point_to_point_command(6, x, y, z, r)
-        if wait:
-            self.wait()
-
-    # Wait until the instruction finishes
-    def wait(self, queue_index=None):
-        # If there are no more instructions in the queue, it will end up
-        # always returning the last instruction - even if it has finished.
-        # Use a zero wait as a non-operation to bypass this limitation
-        self.interface.wait(0)
-
-        if queue_index is None:
-            queue_index = self.interface.get_current_queue_index()
-        while True:
-            if self.interface.get_current_queue_index() > queue_index:
-                break
-
-            sleep(0.5)
-
-    # Move according to the given path
-    def follow_path(self, path, wait=True):
-        self.interface.stop_queue()
-        queue_index = None
-        for point in path:
-            queue_index = self.interface.set_continous_trajectory_command(1, point[0], point[1], point[2], 50)
-        self.interface.start_queue()
-        if wait:
-            self.wait(queue_index)
-
-    # Move according to the given path
-    def follow_path_relative(self, path, wait=True):
-        self.interface.stop_queue()
-        queue_index = None
-        for point in path:
-            queue_index = self.interface.set_continous_trajectory_command(0,  point[0], point[1], point[2], 50)
-        self.interface.start_queue()
-        if wait:
-            self.wait(queue_index)
+# Reset name
+bot.set_device_name(device_name)
