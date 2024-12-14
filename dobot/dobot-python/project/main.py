@@ -48,8 +48,8 @@ bot.set_point_to_point_command(3, 10, 10, 10, 10)
 sleep(1)
 
 # One axis at a time
-bot.set_point_to_point_command(3, 30, 30, 30, 30)
-sleep(1)
+#bot.set_point_to_point_command(3, 30, 30, 30, 30)
+#sleep(1)
 
 def reset_error():
     device_alarm = bot.get_alarms_state()
@@ -57,4 +57,4 @@ def reset_error():
     bot.clear_alarms_state()
     device_alarm = bot.get_alarms_state()
     print(device_alarm)
-reset_error()
+#reset_error()
