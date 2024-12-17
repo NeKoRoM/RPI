@@ -42,7 +42,7 @@ picam2 = Picamera2()
 picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640,480)}))
 picam2.start()
 time.sleep(2)
-picam2.set_controls({"AfMode": controls.AfModeEnum.Manual, "LensPosition": 1000000000.0})
+# picam2.set_controls({"AfMode": controls.AfModeEnum.Manual, "LensPosition": 1000000000.0})
 cv2.namedWindow("Camera")
 cv2.namedWindow("Camera1")
 
@@ -54,7 +54,7 @@ for control_name, control_info in all_controls.items():
 
 
 trackbars = {}
-for control_name, control_info in all_controls.items():
+'''for control_name, control_info in all_controls.items():
     min_value, max_value = control_info[0], control_info[1]
     default_value = control_info[2] if len(control_info) > 2 else min_value
     if min_value < max_value:  # Створюємо трекбари лише для діапазонів значень
@@ -66,7 +66,7 @@ for control_name, control_info in all_controls.items():
                 )
                 trackbars[control_name] = default_value
         except Exception as e:
-                print(f"Error creating trackbar for {control_name}: {e}")
+                print(f"Error creating trackbar for {control_name}: {e}")'''
 
 
 
@@ -113,12 +113,12 @@ prev_time = time.time()
 while True:
         
          # Оновлення значень параметрів
-    for control_name in trackbars.keys():
+        '''for control_name in trackbars.keys():
         trackbar_value = cv2.getTrackbarPos(control_name, "Camera")
         if trackbar_value != trackbars[control_name]:  # Перевірка на зміни
             trackbars[control_name] = trackbar_value
             picam2.set_controls({control_name: trackbar_value})
-            print(f"Updated {control_name} to {trackbar_value}")
+            print(f"Updated {control_name} to {trackbar_value}")'''
 
         
         

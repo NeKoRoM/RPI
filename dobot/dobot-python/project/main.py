@@ -48,6 +48,7 @@ def reset_error():
 #reset_error()
 reset_error()
 
+[x, y, z, r] = bot.get_pose()[0:4]
 print(bot.get_pose())
 # One axis at a time
 #bot.set_point_to_point_command(3, 100, 10, 10, 10)
